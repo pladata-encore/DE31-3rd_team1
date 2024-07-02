@@ -1,25 +1,20 @@
 from django.shortcuts import render
-import MySQLdb
-from django.http import JsonResponse
-import json
-
-import matplotlib.pyplot as plt
-from io import BytesIO
-from django.http import HttpResponse
 from .models import Test
 
 def chart_view(request):
     # counts가 가장 큰 15개의 keyword를 가져옴
     data = Test.objects.order_by('-count')[:15]
-    # print('data :', data)  # 콘솔에 데이터를 출력하여 확인
+    
     keywords = [item.keywords for item in data]
     counts = [item.count for item in data]
-    # for item in data:
-        # print(item.Keywords, item.Counts)  # 각 항목의 값을 출력하여 확인
+
+    # 1위부터 15위까지 나열할 데이터 생성
+    top_keywords = list(zip(keywords, counts))
+
     context = {
         'keywords': keywords,
         'counts': counts,
+        'top_keywords': top_keywords,  # top_keywords를 컨텍스트에 추가
     }
-    return render(request, 'home/index.html', context)
 
-
+    return render(request, 'chart/chart.html', context)

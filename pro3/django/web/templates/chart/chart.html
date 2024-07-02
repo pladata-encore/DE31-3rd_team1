@@ -1,14 +1,48 @@
-<!-- myapp/templates/myapp/chart.html -->
+{% extends 'base.html' %}
+{% load static %}
 
+{% block title %}Home{% endblock %}
+
+{% block content %}
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Top 15 Keywords</title>
+    <title>상위 15개 키워드</title>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- 스타일 추가: Flexbox를 사용하여 두 개의 섹션을 좌우로 배치 -->
+    <style>
+        .container {
+            display: flex; /* Flexbox 레이아웃 사용 */
+        }
+        .left-section, .right-section {
+            padding: 20px;
+            margin: 10px;
+        }
+        .left-section {
+            flex: 1; /* 왼쪽 섹션은 1의 비율로 차지 */
+        }
+        .right-section {
+            flex: 2; /* 오른쪽 섹션은 2의 비율로 차지 */
+        }
+    </style>
 </head>
 <body>
-    <h1>Top 15 Keywords by Counts</h1>
-    <canvas id="myChart" width="400" height="200"></canvas>
+    <!-- Flexbox 컨테이너 추가: 왼쪽과 오른쪽 섹션을 포함 -->
+    <div class="container">
+        <!-- 왼쪽 섹션: 키워드 리스트 -->
+        <div class="left-section">
+            <h1>상위 15개 키워드를 알아보장</h1>
+            <ul>
+                {% for keyword, count in top_keywords %}
+                    <li>{{ keyword }}: {{ count }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+        <!-- 오른쪽 섹션: 그래프 -->
+        <div class="right-section">
+            <canvas id="piechart"></canvas>
+        </div>
+    </div>
     <script>
         document.addEventListener("DOMContentLoaded", function() {
             // Django에서 전달한 데이터를 JavaScript 변수로 전달
@@ -16,15 +50,31 @@
             const counts = {{ counts|safe }};
             
             // Chart.js를 사용하여 그래프 그리기
-            const ctx = document.getElementById('myChart').getContext('2d');
+            const ctx = document.getElementById('piechart').getContext('2d');
             const myChart = new Chart(ctx, {
-                type: 'bar', // 그래프의 타입 (막대 그래프)
+                type: 'pie', // 그래프의 타입 (파이 차트)
                 data: {
                     labels: keywords,
                     datasets: [{
                         label: '# of Counts',
                         data: counts,
-                        backgroundColor: 'rgba(54, 162, 235, 0.2)',
+                        backgroundColor: [
+                            'rgba(255, 99, 132, 0.2)',
+                            'rgba(54, 162, 235, 0.2)',
+                            'rgba(255, 206, 86, 0.2)',
+                            'rgba(75, 192, 192, 0.2)',
+                            'rgba(153, 102, 255, 0.2)',
+                            'rgba(255, 159, 64, 0.2)',
+                            'rgba(255, 99, 132, 0.2)',
+                            'rgba(54, 162, 235, 0.2)',
+                            'rgba(255, 206, 86, 0.2)',
+                            'rgba(75, 192, 192, 0.2)',
+                            'rgba(153, 102, 255, 0.2)',
+                            'rgba(255, 159, 64, 0.2)',
+                            'rgba(255, 99, 132, 0.2)',
+                            'rgba(54, 162, 235, 0.2)',
+                            'rgba(255, 206, 86, 0.2)'
+                        ],
                         borderColor: 'rgba(54, 162, 235, 1)',
                         borderWidth: 1
                     }]
@@ -39,10 +89,6 @@
             });
         });
     </script>
-    <ul>
-        {% for item in data %}
-            <li>{{ keywords }}: {{ counts }}</li>
-        {% endfor %}
-    </ul>
 </body>
 </html>
+{% endblock %}

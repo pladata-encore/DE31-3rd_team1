@@ -27,3 +27,5 @@ def index(request):
         'image_url': image_url             # 동적으로 설정된 이미지 경로를 템플릿으로 전달
     }
     return render(request, 'home/index.html', context)
+
+

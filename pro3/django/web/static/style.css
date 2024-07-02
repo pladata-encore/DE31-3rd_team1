@@ -1,11 +1,40 @@
-.custom-navbar {
-    list-style-type: none;
-    background: rgb(190, 255, 215);
+* {
+    font-family: "Gowun Batang", serif;
+    font-weight: 400;
+    font-style: normal;
+}
+
+.navbar {
+    background: rgb(30, 3, 66); /* 네비게이션 바의 배경색 */
     padding: 10px;
     margin: 0px;
     overflow: hidden;
 }
 
+
+.custom-navbar {
+    list-style-type: none;
+    background: rgb(30, 3, 66); /* 네비게이션 바의 배경색 */
+    padding: 10px;
+    margin: 0px;
+    overflow: hidden;
+}
+
+.nav-link {
+    color: rgb(20, 90, 139); /* 링크 텍스트 색상 */
+    font-size: 24px;
+    text-align: center;
+    text-decoration: none;
+}
+
+.nav-link:hover {
+    color: black;
+    background-color: rgb(154, 200, 205); /* 호버 시 브랜드의 배경색 */
+    font-size: 26px;
+    font-weight: bold;
+    text-decoration: none;
+    border-radius: 10px;
+}
 
 .chart-container {
     float: right; /* 오른쪽으로 정렬 */
@@ -13,4 +42,26 @@
     margin: 150px;
     margin-right: -200px;
     height: auto; /* 자동 높이 조정 */
+}
+
+.navbar-brand {
+    color: rgb(47, 92, 255); /* 브랜드 텍스트 색상 */
+    font-size: 24px;
+    text-align: center;
+    text-decoration: none;
+}
+
+.navbar-brand:hover {
+    color: rgb(33, 28, 116);
+    background-color: rgb(10, 72, 79); /* 호버 시 브랜드의 배경색 */
+    font-size: 26px;
+    font-weight: bold;
+    text-decoration: none;
+    border-radius: 10px;
+}
+
+/* 기본 이미지 스타일 */
+#basic_image {
+    width: 150%;
+    height: 60%;
 }
