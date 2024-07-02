@@ -20,6 +20,6 @@ def chart_view(request):
         'keywords': keywords,
         'counts': counts,
     }
-    return render(request, 'chart/chart.html', context)
+    return render(request, 'home/index.html', context)
 
 
