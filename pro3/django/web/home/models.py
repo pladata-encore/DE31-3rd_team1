@@ -7,3 +7,4 @@ class Test1(models.Model):
     class Meta:
         managed = False
         db_table = None  # 테이블 이름을 나중에 동적으로 설정
+
