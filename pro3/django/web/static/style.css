@@ -1,0 +1,16 @@
+.custom-navbar {
+    list-style-type: none;
+    background: rgb(190, 255, 215);
+    padding: 10px;
+    margin: 0px;
+    overflow: hidden;
+}
+
+
+.chart-container {
+    float: right; /* 오른쪽으로 정렬 */
+    width: 100%; /* 원하는 너비로 설정 */
+    margin: 150px;
+    margin-right: -200px;
+    height: auto; /* 자동 높이 조정 */
+}
