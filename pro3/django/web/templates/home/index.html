@@ -1,5 +1,4 @@
 {% extends 'base.html' %}
-{% load static %}
 
 {% block title %}Home{% endblock %}
 
@@ -8,10 +7,9 @@
     <div class="row">
         <div class="col-md-4">
             <!-- 왼쪽에 배치할 검색 폼 -->
-            <form method="GET" onsubmit="handleFormSubmit(event)">
+            <form method="GET">
                 <div class="searchForm">
                     <input type="date" name="input-date" id="date" class="form-control mb-2">
-                    <script>document.getElementById('date').value = new Date().toISOString().substring(0, 10);</script>
                     <input type="submit" id="btnSearchWordCloud" value="확인" class="btn btn-primary mb-2" style="background-color: rgb(30, 3, 66); border: none;">
                 </div>
             </form>
@@ -28,11 +26,15 @@
                         // Django에서 전달한 데이터를 JavaScript 변수로 전달
                         const keywords = JSON.parse('{{ keywords|escapejs }}');
                         const counts = JSON.parse('{{ counts|escapejs }}');
-                        
-                        // Chart.js를 사용하여 그래프 그리기
+
+                        // 로그 추가
+                        console.log("Keywords:", keywords);
+                        console.log("Counts:", counts);
+
+                        // Chart.js 그래프 업데이트
                         const ctx = document.getElementById('myChart').getContext('2d');
-                        const myChart = new Chart(ctx, {
-                            type: 'bar', // 그래프의 타입 (막대 그래프)
+                        let myChart = new Chart(ctx, {
+                            type: 'bar',  // 그래프 타입 (막대 그래프)
                             data: {
                                 labels: keywords,
                                 datasets: [{
@@ -51,6 +53,31 @@
                                 }
                             }
                         });
+
+                        // Chart 업데이트 (optional)
+                        if (myChart) {
+                            myChart.destroy();  // 이전 차트를 제거
+                            myChart = new Chart(ctx, {
+                                type: 'bar',  // 그래프 타입 (막대 차트)
+                                data: {
+                                    labels: keywords,
+                                    datasets: [{
+                                        label: '# of Counts',
+                                        data: counts,
+                                        backgroundColor: 'rgba(54, 162, 235, 0.2)',
+                                        borderColor: 'rgba(54, 162, 235, 1)',
+                                        borderWidth: 1
+                                    }]
+                                },
+                                options: {
+                                    scales: {
+                                        y: {
+                                            beginAtZero: true
+                                        }
+                                    }
+                                }
+                            });
+                        }
                     });
                 </script>
             </div>
