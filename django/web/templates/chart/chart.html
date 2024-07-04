@@ -1,0 +1,135 @@
+{% extends 'base.html' %}
+<!-- 이 템플릿은 'base.html' 템플릿을 확장 -->
+
+{% load static %}
+<!-- Django의 static 파일 태그 라이브러리를 로드 -->
+
+{% block title %}Chart{% endblock %}
+<!-- 'title' 블록을 정의하고 'Chart'라는 제목을 설정 -->
+
+
+{% block content %}
+<!-- 데이터 입력 폼 시작 -->
+<form method="GET">
+    <div class="searchForm">
+        <!-- 날짜 입력 필드 -->
+        <input type="date" name="input-date" id="date" class="form-control mb-2">
+        <!-- 날짜 입력 필드를 자동으로 설정하는 스크립트 (현재 주석 처리됨) -->
+        <!-- <script>
+            window.onload = function() {
+                var dateInput = document.getElementById('date');
+                if (!dateInput.value) {
+                    dateInput.value = new Date().toISOString().substring(0, 10);
+                }
+            }
+        </script> -->
+
+        <!-- 확인 버튼 -->
+        <input type="submit" id="btnSearch" value="확인" >
+    </div>
+</form>
+<!-- 데이터 입력 폼 끝 -->
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-4">
+            <!-- 왼쪽 섹션: 키워드 리스트 -->
+            <div class="left-section">
+                <!-- 선택한 날짜 테이블의 이름을 표시 -->
+                <h2>{{ table_name }}</h2>
+                <h1>Chart를 그려보장!</h1>
+                <ul>
+                    <!-- 키워드와 카운트 리스트를 표시 -->
+                    {% for Keyword, count in top_Keyword %}
+                        <li>{{ Keyword }}: {{ count }}</li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+        <div class="col-md-8">
+            <!-- 오른쪽 섹션: 차트 컨테이너 -->
+            <div class="chart-container">
+                <!-- 바 차트를 그릴 캔버스 -->
+                <div class="chart-wrapper">
+                    <canvas id="barChart"></canvas>
+                </div>
+                <!-- 파이 차트를 그릴 캔버스 -->
+                <div class="chart-wrapper" style="margin-top: 50px;">
+                    <canvas id="pieChart"></canvas>
+                </div>
+                <!-- 차트를 그리기 위한 JavaScript -->
+                <script>
+                    document.addEventListener("DOMContentLoaded", function() {
+                        // Django에서 전달한 데이터를 JavaScript 변수로 전달
+                        const Keyword = JSON.parse('{{ Keyword|escapejs }}');
+                        const count = JSON.parse('{{ count|escapejs }}');
+
+                        // 로그 추가
+                        console.log("Keyword:", Keyword);
+                        console.log("count:", count);
+
+                        // 바 차트 생성
+                        const barCtx = document.getElementById('barChart').getContext('2d');
+                        let barChart = new Chart(barCtx, {
+                            type: 'bar',  // 그래프 타입 (막대 그래프)
+                            data: {
+                                labels: Keyword,
+                                datasets: [{
+                                    label: '단어별 등장횟수',
+                                    data: count,
+                                    backgroundColor: 'rgba(54, 162, 235, 0.2)',
+                                    borderColor: 'rgba(54, 162, 235, 1)',
+                                    borderWidth: 1
+                                }]
+                            },
+                            options: {
+                                scales: {
+                                    y: {
+                                        beginAtZero: true
+                                    }
+                                },
+                                maintainAspectRatio: false,
+                                responsive: true
+                            }
+                        });
+
+                        // 파이 차트 생성
+                        const pieCtx = document.getElementById('pieChart').getContext('2d');
+                        let pieChart = new Chart(pieCtx, {
+                            type: 'pie',  // 그래프 타입 (파이 그래프)
+                            data: {
+                                labels: Keyword,
+                                datasets: [{
+                                    data: count,
+                                    backgroundColor: [
+                                        'rgba(255, 99, 132, 0.2)',
+                                        'rgba(54, 162, 235, 0.2)',
+                                        'rgba(255, 206, 86, 0.2)',
+                                        'rgba(75, 192, 192, 0.2)',
+                                        'rgba(153, 102, 255, 0.2)',
+                                        'rgba(255, 159, 64, 0.2)',
+                                        'rgba(201, 203, 207, 0.2)',
+                                        'rgba(255, 99, 132, 0.2)',
+                                        'rgba(54, 162, 235, 0.2)',
+                                        'rgba(255, 206, 86, 0.2)',
+                                        'rgba(75, 192, 192, 0.2)',
+                                        'rgba(153, 102, 255, 0.2)',
+                                        'rgba(255, 159, 64, 0.2)',
+                                        'rgba(201, 203, 207, 0.2)',
+                                        'rgba(54, 162, 235, 0.2)'
+                                    ],
+                                    borderWidth: 1
+                                }]
+                            },
+                            options: {
+                                responsive: true,
+                                maintainAspectRatio: false
+                            }
+                        });
+                    });
+                </script>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
