@@ -1,14 +1,19 @@
-# modules/news_crawling.py
-
-from datetime import datetime, timedelta
+from datetime import datetime
 import aiohttp
 import asyncio
 import pandas as pd
 from bs4 import BeautifulSoup
 import nest_asyncio
+import os
+import subprocess
+from pyarrow import fs
+import pyarrow as pa
+import pyarrow.csv as pc
 
+# nest_asyncio는 기존 asyncio 이벤트 루프를 중첩할 수 있게 해줍니다.
 nest_asyncio.apply()
 
+# 웹 페이지에서 데이터를 비동기로 가져오는 함수
 async def fetch(session, url, retries=3):
     for attempt in range(retries):
         try:
@@ -24,6 +29,7 @@ async def fetch(session, url, retries=3):
             await asyncio.sleep(2 ** attempt)  # 지수 백오프
     return None
 
+# 뉴스 링크를 가져오는 함수
 async def get_news_links(session, base_url, page):
     url = f"{base_url}&page={page}"
     response_text = await fetch(session, url)
@@ -39,6 +45,7 @@ async def get_news_links(session, base_url, page):
 
     return links
 
+# 뉴스 내용을 가져오는 함수
 async def get_news_content(session, url):
     response_text = await fetch(session, url)
     if response_text is None:
@@ -54,9 +61,11 @@ async def get_news_content(session, url):
         return title, content
     return None, None
 
+# 뉴스 스크래핑 함수
 def scrape_news():
-    today = datetime.today().strftime("%Y%m%d")
-    base_url = "https://news.naver.com/main/list.naver?mode=LSD&mid=shm&sid1=101&date=" + today
+    # 오늘 날짜를 기반으로 뉴스 URL 설정
+    news_today = datetime.today().strftime("%Y%m%d")
+    base_url = "https://news.naver.com/main/list.naver?mode=LSD&mid=shm&sid1=101&date=" + news_today
 
     async def _scrape_news():
         async with aiohttp.ClientSession() as session:
@@ -66,6 +75,7 @@ def scrape_news():
             while True:
                 links = await get_news_links(session, base_url, page)
                 if not links or page == 500:
+                    print("링크 다 불러왔어요!")
                     break            
                 news_links.update(links)
                 page += 1
@@ -76,14 +86,33 @@ def scrape_news():
             # None 값을 제거
             news_contents = [content for content in news_contents if content[0] is not None]
 
-            # 명사 추출
+            # 뉴스 데이터를 명사로 추출하여 DataFrame에 저장
             nouns_data = []
             for title, content in news_contents:
                 nouns_data.append({'Title': title, 'content': content})
 
             df = pd.DataFrame(nouns_data)
-            df.to_csv(f"/home/hadoop/project/third_project/data/{today}.csv", index=False, encoding='utf-8-sig')
+            # DataFrame을 JSON 문자열로 변환하여 리턴
+            return df.to_json(orient='records')
 
-    asyncio.run(_scrape_news())
+    return asyncio.run(_scrape_news())
 
+# JSON 데이터를 HDFS로 전송하는 함수
+def transfer_to_hdfs(json_data):
+    today = datetime.today().strftime("%Y-%m-%d")
+    file_path = f"/test/{today}.csv"
+    # Hadoop classpath 설정
+    classpath = subprocess.Popen(["/home/ksk/hadoop/bin/hdfs", "classpath", "--glob"], stdout=subprocess.PIPE).communicate()[0]
+    os.environ["CLASSPATH"] = classpath.decode("utf-8")
+    hdfs = fs.HadoopFileSystem(host='192.168.0.206', port=8020, user='ksk')
 
+    # JSON 데이터를 DataFrame으로 변환
+    df = pd.read_json(json_data, orient='records')
+
+    # Pandas DataFrame을 PyArrow의 Table 객체로 변환
+    table = pa.Table.from_pandas(df)
+    
+    # HDFS에 Parquet 파일로 저장
+    with hdfs.open_output_stream(file_path) as stream:
+        pc.write_csv(table, stream)
+    print(f"DataFrame saved to HDFS at {file_path}")
