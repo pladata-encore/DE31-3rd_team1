@@ -16,7 +16,7 @@ def chart_view(request):
 
     # 동적으로 테이블 이름을 설정하여 데이터 가져오기
     with connections['default'].cursor() as cursor:
-        cursor.execute(f"SELECT Keyword, count FROM {table_name} ORDER BY Count DESC LIMIT 15")
+        cursor.execute(f"SELECT Keyword, count FROM {table_name} ORDER BY Count DESC LIMIT 15 OFFSET 15")
         rows = cursor.fetchall()
 
     Keyword = [row[0] for row in rows]
