@@ -13,12 +13,13 @@ import json
 def index(request):
     # 현재 날짜를 YYYY-MM-DD 형식으로 가져오기
     today = datetime.now().strftime('%Y-%m-%d')
-    yesterday = (datetime.now() - timedelta(days=1)).strftime('%Y-%m-%d')
-
-    # SQL 쿼리 작성
-    #query = f"SELECT Keyword, count FROM {yesterday} ORDER BY count DESC LIMIT 5"
+    yesterday = (datetime.now() - timedelta(days=3)).strftime('%Y-%m-%d')
+    table = yesterday.strip("'")
     
-    query = "SELECT Keyword, count FROM test ORDER BY count DESC LIMIT 5"
+    # SQL 쿼리 작성
+    query = f"SELECT Keyword FROM `{table}` LIMIT 5"
+    
+    #query = "SELECT Keyword, count FROM test ORDER BY count DESC LIMIT 5"
     
     try:
         with connection.cursor() as cursor:

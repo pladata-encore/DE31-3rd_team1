@@ -3,10 +3,10 @@
 
 {% block content %}
 <form method="get" action="{% url 'word:word' %}">
-    <div class="form-group">
+    <div class="searchForm">
         <input type="date" id="input-date" name="input-date" class="form-control mb-2" required>
-    </div>
-    <button type="submit" class="btn btn-primary mb-2"  style="background-color: rgb(30, 3, 66); border: none;">확인</button>
+        <input type="submit" id="btnSearch" value="확인" >
+    </div>    
 </form>
 
  

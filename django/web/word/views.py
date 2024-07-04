@@ -1,5 +1,6 @@
 from django.shortcuts import render
 from django.db import connection,connections
+from django.conf import settings
 from wordcloud import WordCloud
 import matplotlib.pyplot as plt
 import matplotlib.font_manager as fm
@@ -9,7 +10,8 @@ from gtts import gTTS
 import os
 
 # 한글 폰트 설정
-font_path = '/usr/share/fonts/truetype/nanum/NanumGothic.ttf'  # 경로를 자신의 시스템에 맞게 수정
+font_path = os.path.join(settings.BASE_DIR, 'static/fonts', 'NanumGothic.ttf')
+# font_path = '/usr/share/fonts/truetype/nanum/NanumGothic.ttf'  # static/fonts 에 넣어둠
 font_prop = fm.FontProperties(fname=font_path)
 plt.rc('font', family=font_prop.get_name())
 
