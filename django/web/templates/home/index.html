@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+{% load static %}
+
+
+
+{% block content %}
+
+<div class="container mt-5">
+    <div class="container">
+        <div class="textline">
+            <p id="text1">{{ yesterday }} 기준, 네이버 경제 뉴스에서 가장 많이 언급된 단어는 {{ Keyword|safe }}입니다.</p>
+            <p id="text2">더 많은 정보를 보려면 아래 메뉴를 클릭해주세요.</p>
+        </div>    
+        <div class="button">
+            <button id="chart_button" type="button" onclick="location.href='/chart'">차트보기</button>
+            <button id="word_button" type="button" onclick="location.href='/word'">워드클라우드보기</button>
+        </div>
+        </div>
+        
+    </div>
+</div>
+
+
+        
+
+
+
+
+{% endblock %}

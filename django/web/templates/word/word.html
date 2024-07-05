@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<form method="get" action="{% url 'word:word' %}">
+    <div class="searchForm">
+        <input type="date" id="input-date" name="input-date" class="form-control mb-2" required>
+        <input type="submit" id="btnSearch" value="확인" >
+    </div>    
+</form>
+
+ 
+
+<div class="image-container">
+    <img src="data:image/png;base64,{{ wordcloud }}" alt="Word Cloud"> 
+    <div class="date-overlay">{{ input_date }}</div>
+</div>
+
+{% endblock %}
