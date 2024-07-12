@@ -6,12 +6,9 @@ import matplotlib.pyplot as plt
 import matplotlib.font_manager as fm
 import io
 import base64
-from gtts import gTTS
 import os
 
-# 한글 폰트 설정
 font_path = os.path.join(settings.BASE_DIR, 'static/fonts', 'NanumGothic.ttf')
-# font_path = '/usr/share/fonts/truetype/nanum/NanumGothic.ttf'  # static/fonts 에 넣어둠
 font_prop = fm.FontProperties(fname=font_path)
 plt.rc('font', family=font_prop.get_name())
 
@@ -24,14 +21,12 @@ def word(request):
     else:
         table_name = '`2024-07-01`'  # 기본값 설정
 
-    # 동적으로 테이블 이름을 설정하여 데이터 가져오기
+   
     with connections['default'].cursor() as cursor:
         cursor.execute(f"SELECT * FROM {table_name} LIMIT 100")
         rows = cursor.fetchall()
     
 
-
-    # 데이터를 쉽게 사용할 수 있도록 리스트로 변환
     word_data = [{'Keyword': row[0], 'count': row[1]} for row in rows]
 
       
@@ -40,7 +35,6 @@ def word(request):
     
     img = io.BytesIO()
     plt.rcParams["font.family"] = 'NanumGothic'
-    #font_path = '/usr/share/fonts/truetype/nanum/NanumGothic.ttf'  
     plt.figure(figsize=(10, 7))
     plt.imshow(wordcloud, interpolation='bilinear')
     plt.axis('off')

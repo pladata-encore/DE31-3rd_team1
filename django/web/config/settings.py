@@ -81,7 +81,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'encore_web',
         'USER': 'class5',
-        'PASSWORD': 'EnCoRo!23',
+        'PASSWORD': '123',
         'HOST': '43.202.5.70',
         'PORT': '3306',
         
