@@ -4,3 +4,6 @@ django/web/chart/__pycache__/
 django/web/config/__pycache__/
 django/web/home/__pycache__
 *.pyc
+
+# env
+*.env
