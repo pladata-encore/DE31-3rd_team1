@@ -4,7 +4,8 @@ services:
   db:
     image: mysql:8.0.35
     environment:
-      MYSQL_ROOT_PASSWORD: 123
+      MYSQL_USER: class5
+      MYSQL_PASSWORD: 123
       
     ports:
       - 3306:3306  
