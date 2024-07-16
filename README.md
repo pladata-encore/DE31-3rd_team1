@@ -20,7 +20,7 @@
 4. 데이터 저장
 5. 데이터 시각화
 ```
-Third_project
+DE31-3rd_team2
 ├── airflow
 │   ├── airflow.cfg              # Airflow 설정 파일
 │   ├── dags                     # DAG 정의 파일들이 있는 디렉토리
@@ -93,7 +93,7 @@ Third_project
 	1. HDFS에 저장된 데이터를 Spark를 이용해 로드
   2. 기사 내용 데이터를 바른API에 요청하여 키워드 추출
   3. 키워드와 해당 키워드의 빈도수를 집계하여 DB에 저장할 형식으로 변환
-- 자세한 코드는 [여기](https://github.com/pladata-encore/DE31-3rd_team2/blob/seokkwang/modules/keyword_ext.py)를 참고
+- 자세한 코드는 [여기](https://github.com/pladata-encore/DE31-3rd_team2/blob/develop/airflow/modules/keyword_ext.py)를 참고
 
 ### 2-2. 데이터 전처리(Mecab)
 - **담당자**: 조명아, 최태성
@@ -101,13 +101,14 @@ Third_project
 	1. HDFS에 저장된 데이터를 로드
   2. 기사 내용 데이터를 Mecab 모듈의 형태소 분석을 통해 키워드 추출
   3. 키워드와 해당 키워드의 빈도수를 집계하여 DB에 저장할 형식으로 변환
-- 자세한 코드는 [여기]()를 참고
+- 자세한 코드는 [여기](https://github.com/pladata-encore/DE31-3rd_team2/blob/develop/airflow/modules/keyword_ext_mecab.py)를 참고
 
 ### 3. 데이터 워크플로우 관리
 - **담당자**: 기석광, 최태성
 - **과정**:
   1. Airflow DAG을 정의하여 크롤링, 데이터 저장 및 전처리 작업을 자동화
   2. 각각의 작업(Task)을 단계별로 정의하고 의존성 설정
+- 자세한 코드는 [여기](https://github.com/pladata-encore/DE31-3rd_team2/blob/develop/airflow/dags/news_crawling_dag.py)를 참고
   
 
 ### 4. django 웹페이지 제작 및 데이터 시각화
