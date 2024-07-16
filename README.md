@@ -19,8 +19,47 @@
 3. 데이터 워크플로우 관리
 4. 데이터 저장
 5. 데이터 시각화
-
-![image](https://github.com/user-attachments/assets/9e787b87-a49c-4eaa-aef5-178f2aa22b28)
+```
+Third_project
+├── airflow
+│   ├── airflow.cfg              # Airflow 설정 파일
+│   ├── dags                     # DAG 정의 파일들이 있는 디렉토리
+│   │   └── news_crawling_dag.py
+│   ├── docker-compose.yml       # Airflow를 위한 Docker Compose 설정 파일
+│   ├── Dockerfile               # Airflow 이미지를 빌드하기 위한 Dockerfile
+│   ├── init_airflow.sh          # Airflow 초기화를 위한 스크립트
+│   ├── logs                     # Airflow 로그 디렉토리
+│   │   └── scheduler            # 스케줄러 관련 로그
+│   ├── modules                  # Airflow 태스크를 위한 커스텀 파이썬 모듈들
+│   │   ├── keyword_ext_mecab.py
+│   │   ├── keyword_ext.py
+│   │   └── news_crawling.py
+│   └── requirements.txt         # Airflow를 위한 파이썬 의존성 파일
+└── django
+    └── web
+        ├── chart                # 차트 기능을 위한 Django 앱
+        │   ├── admin.py
+        │   ├── models.py
+        │   ├── views.py
+        │   ├── urls.py
+        ├── config               # Django 프로젝트 설정
+        │   ├── settings.py
+        │   ├── urls.py
+        │   └── wsgi.py
+        ├── docker-compose.yml   # Django를 위한 Docker Compose 설정 파일
+        ├── Dockerfile           # Django 이미지를 빌드하기 위한 Dockerfile
+        ├── manage.py            # Django 관리 스크립트
+        ├── requirements.txt     # Django를 위한 파이썬 의존성 파일
+        ├── static               # 정적 파일들 (CSS, JavaScript, 이미지 등)
+        │   ├── bootstrap.min.css
+        │   ├── bootstrap.min.js
+        │   └── style.css
+        └── templates            # HTML 템플릿들
+            ├── base.html
+            ├── chart.html
+            ├── index.html
+            └── navbar.html
+```
 
 ## 기술 스택
 - **Python**: 데이터 수집 및 크롤링, 키워드 추출
