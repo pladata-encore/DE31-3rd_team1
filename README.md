@@ -186,9 +186,9 @@ $SPARK_HOME/sbin/start-all.sh
 ### 설치
 
 1. **Python 패키지 설치**:
-    ```bash
-    pip install asyncio beautifulsoup4 requests Django psycopg2-binary
-    ```
+```bash
+pip install asyncio beautifulsoup4 requests Django psycopg2-binary
+```
 
 2. **Hadoop설치**:
 ```bash
