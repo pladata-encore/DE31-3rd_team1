@@ -191,10 +191,10 @@ $SPARK_HOME/sbin/start-all.sh
     ```
 
 2. **Hadoop설치**:
-	```bash
+```bash
 wget https://dlcdn.apache.org/hadoop/common/hadoop-3.3.6/hadoop-3.3.6.tar.gz
 	tar xvzf ./hadoop-3.3.6.tar.gz
-    ```
+```
     
 3. **Spark 설치**
 
@@ -205,62 +205,47 @@ wget https://dlcdn.apache.org/spark/spark-3.4.3/spark-3.4.3-bin-hadoop3.tgz
 
 
 4. **Airflow 설치**:
-    ```bash
-    pip install apache-airflow
-    ```
+```bash
+pip install apache-airflow
+```
 
 5. **MYSQL 설치**:
-  ```bash
-	pip install mysqlclient
-   ```
+```bash
+pip install mysqlclient
+```
 
 6. **docker 설치**:
-   ```bash
-    curl -sSL get.docker.com | sh
-   ```  
+```bash
+curl -sSL get.docker.com | sh
+```  
     
     
 
 ### 실행
 
-1. **데이터 크롤러 실행**:
-    ```bash
-    python crawler.py
-    ```
+1. **Airflow 시작**:
+- airflow 폴더 이동
+```bash
+docker compose up
+```
 
-2. **Airflow 시작**:
-    ```bash
-    airflow db init
-    airflow webserver --port 8080
-    airflow scheduler
-    ```
-
-3. **Django 서버 시작**:
-    ```bash
-    sudo service docker start
-    docker compose up
-    ```
+2. **Django 서버 시작**:
+- django/web 폴더 이동
+```bash
+sudo service docker start
+docker compose up
+```
     
     
-  **django 웹페이지 기능 시연**
-  
-  
+3. **django 웹페이지 기능 시연**
   
  ![Animation](https://github.com/user-attachments/assets/6c7f01ff-b297-480d-9552-969ff5b1fa8b)
      
-     
-  
-  
-  
-  
-     
-  
 4. **Spring Boot JAR 파일 실행**:
-    ```bash
-    java -jar target/advanced_jpa-0.0.1-SNAPSHOT.jar
-    ```
-  
-  
+```bash
+java -jar target/advanced_jpa-0.0.1-SNAPSHOT.jar
+```
+
 ![image](https://github.com/user-attachments/assets/964c902f-6631-40df-a411-bdcf7d39c5d9)
 ![image](https://github.com/user-attachments/assets/a066ad57-3bff-4fba-8389-eb524afced44)
 ![image](https://github.com/user-attachments/assets/b2ee3e7d-1de0-4ac6-a179-464e322b82db)
