@@ -20,7 +20,7 @@
 4. 데이터 저장
 5. 데이터 시각화
 
-![[Pasted image 20240715123236.png]]
+![image](https://github.com/user-attachments/assets/9e787b87-a49c-4eaa-aef5-178f2aa22b28)
 
 ## 기술 스택
 - **Python**: 데이터 수집 및 크롤링, 키워드 추출
@@ -31,7 +31,7 @@
 - **Apache Spark**: 데이터 전처리
 - **MySQL**: 데이터 저장
 - **django**: python 기반 웹 페이지 구현
-- **docker**: 컨테이너 환경에서 django 를 실행하기 위해 사용
+- **docker**: 컨테이너 환경에서 airflow, django 를 실행하기 위해 사용
 - **JavaScript (Chart.js)**: 데이터 시각화
 - **HTML/CSS**: 웹 페이지 구성
 - **Spring Boot**: API 서버 구축
