@@ -10,12 +10,12 @@ django/web/home/__pycache__
 __pycache__/
 *.py[cod]
 *$py.class
-*.ipynb
 include/site/python3.10/greenlet
 konlpy/
 mecab-ko-dic-2.1.1-20180720/
 docker/
 *.db
+pyvenv.cfg
 # C extensions
 *.so
 
