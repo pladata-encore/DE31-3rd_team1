@@ -66,7 +66,6 @@ def scrape_news():
     # 오늘 날짜를 기반으로 뉴스 URL 설정
     news_today = datetime.today().strftime("%Y%m%d")
     base_url = "https://news.naver.com/main/list.naver?mode=LSD&mid=shm&sid1=101&date=" + news_today
-
     async def _scrape_news():
         async with aiohttp.ClientSession() as session:
             news_links = set()
