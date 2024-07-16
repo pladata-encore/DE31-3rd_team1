@@ -50,10 +50,7 @@ RUN wget https://bitbucket.org/eunjeon/mecab-ko-dic/downloads/mecab-ko-dic-2.1.1
 
 # Create Airflow logs directory and set permissions
 RUN mkdir -p /opt/airflow/logs/dag_processor_manager && \
-    chown -R airxflow: /opt/airflow
-    
-# iptables 규칙 추가 (포트 23044 열기)
-RUN iptables -A INPUT -p tcp --dport 23044 -j ACCEPT
+    chown -R airflow: /opt/airflow
 
 # Install Python dependencies
 USER airflow
@@ -71,12 +68,13 @@ COPY airflow.cfg $AIRFLOW_HOME/airflow.cfg
 COPY dags/ $AIRFLOW_HOME/dags
 COPY modules/ $AIRFLOW_HOME/modules/
 
-# 필요한 파일 복사
+# Copy the init script and set permissions
 COPY init_airflow.sh /init_airflow.sh
-
-# init_airflow.sh 파일에 실행 권한 부여
 RUN chmod +x /init_airflow.sh
 
-# 기본 명령어 설정
+# Set entrypoint
 USER airflow
 ENTRYPOINT ["/init_airflow.sh"]
+
+# Expose the port
+EXPOSE 23044
