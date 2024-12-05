@@ -74,14 +74,12 @@ DE31-3rd_team2
 ## 단계별 작업
 
 ### 1. 데이터 수집 및 비동기 크롤링
-- **담당자**: 기석광, 조명아
 - **과정**:
   1. nest_asyncio 모듈을 이용하여 비동기 방식으로 네이버 경제 기사를 크롤링한다. 
   2. 추출된 데이터를 구조화된 형식으로 HDFS에 csv파일로 전송한다.
 - 자세한 코드는 [여기](https://github.com/pladata-encore/DE31-3rd_team2/blob/seokkwang/modules/news_crawling.py)를 참고
 
 ### 2-1. 데이터 전처리(바른API)
-- **담당자**: 조명아, 최태성
 - **과정**:
 	1. HDFS에 저장된 데이터를 Spark를 이용해 로드
   2. 기사 내용 데이터를 바른API에 요청하여 키워드 추출
@@ -89,7 +87,6 @@ DE31-3rd_team2
 - 자세한 코드는 [여기](https://github.com/pladata-encore/DE31-3rd_team2/blob/develop/airflow/modules/keyword_ext.py)를 참고
 
 ### 2-2. 데이터 전처리(Mecab)
-- **담당자**: 조명아, 최태성
 - **과정**:
 	1. HDFS에 저장된 데이터를 로드
   2. 기사 내용 데이터를 Mecab 모듈의 형태소 분석을 통해 키워드 추출
@@ -97,7 +94,6 @@ DE31-3rd_team2
 - 자세한 코드는 [여기](https://github.com/pladata-encore/DE31-3rd_team2/blob/develop/airflow/modules/keyword_ext_mecab.py)를 참고
 
 ### 3. 데이터 워크플로우 관리
-- **담당자**: 기석광, 최태성
 - **과정**:
   1. Airflow DAG을 정의하여 크롤링, 데이터 저장 및 전처리 작업을 자동화
   2. 각각의 작업(Task)을 단계별로 정의하고 의존성 설정
@@ -105,7 +101,6 @@ DE31-3rd_team2
   
 
 ### 4. django 웹페이지 제작 및 데이터 시각화
-- **담당자**: 신소영, 차민혁
 - **과정**:
   1. Django 템플릿을 이용해 기본 웹 페이지 구성
   2. 날짜 입력 폼을 제공하여 원하는 날짜 입력
@@ -113,14 +108,12 @@ DE31-3rd_team2
   4. 조회된 데이터를 바탕으로 python 라이브러리를 이용해 워드클라우드로 구현하고 chart.js 를 활용해 차트 생성 
  
 ### 5. docker 실행 환경 구축
-- **담당자**: 신소영, 차민혁
 - **과정**:
   1. dockerfile , docker-compose.yml 파일 제작
   2. 도커환경에서 애플리케이션을 실행 할 수 있도록 환경 구축
  
 
 ### 6. API 서버 구축
-- **담당자**: 차민혁
 - **과정**:
   1. 스프링 부트 애플리케이션을 설정하고,  API 문서화 설정
   2. 엔티티와 레포지토리를 구현하여 CRUD API를 제작
